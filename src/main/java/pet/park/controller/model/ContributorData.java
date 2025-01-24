@@ -17,6 +17,7 @@ import pet.park.entity.PetPark;
  * 
  */
 @Data
+@NoArgsConstructor
 public class ContributorData {
 	/**
 	 * @param save

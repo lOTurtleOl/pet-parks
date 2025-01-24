@@ -30,7 +30,7 @@ public class ParkController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public ContributorData insertContributor(
 			@RequestBody ContributorData contributorData) {
-		log.info("Creating contributor {}", contributorData);
+		log.info("Creating contributor a{}", contributorData);
 		return parkService.saveContributor(contributorData);
 	}
 }
