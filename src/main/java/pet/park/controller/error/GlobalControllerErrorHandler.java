@@ -7,6 +7,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.NoSuchElementException;
 
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -43,6 +44,13 @@ public class GlobalControllerErrorHandler {
 		return buildExceptionMessage(ex, HttpStatus.NOT_FOUND, webRequest,
 				LogStatus.MESSAGE_ONLY);
 	}
+	
+	@ExceptionHandler(DuplicateKeyException.class)
+	@ResponseStatus(code = HttpStatus.CONFLICT)
+	public ExceptionMessage handleDuplicateKeyException(DuplicateKeyException ex, WebRequest webRequest) {
+		return buildExceptionMessage(ex, HttpStatus.CONFLICT, webRequest,
+				LogStatus.MESSAGE_ONLY);
+	}
 
 	/**
 	 * @param ex
@@ -51,7 +59,7 @@ public class GlobalControllerErrorHandler {
 	 * @param messageOnly
 	 * @return
 	 */
-	private ExceptionMessage buildExceptionMessage(NoSuchElementException ex,
+	private ExceptionMessage buildExceptionMessage(Exception ex,
 			HttpStatus status, WebRequest webRequest, LogStatus logStatus) {
 		String message = ex.toString();
 		String statusReason = status.getReasonPhrase();
